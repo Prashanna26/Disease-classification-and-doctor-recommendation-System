@@ -1,0 +1,48 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="/static/css/nav.css" />
+
+<div class="nav">
+  <div class="logo">
+    <a href="/">
+      <img
+        src="{% static 'images/Logo.png' %}"
+        alt="Logo"
+        style="width: 190px; height: auto"
+      />
+    </a>
+  </div>
+
+  <div class="nav-links">
+    {% if user.is_authenticated %}
+    <div class="user-profile">
+      <a href="{% url 'profile' %}" class="nav-item profile-link">
+        <img
+          src="{% static 'images/user-icon1.png' %}"
+          alt="User Icon"
+          style="height: 35px"
+        />
+        <span>{{ user.username }}</span>
+      </a>
+    </div>
+
+    {% if user.hospital %}
+    <div class="hospital-admin">
+      <a
+        href="{% url 'hospital_dashboard' %}"
+        class="nav-item hospital-admin-btn"
+        >Hospital Admin</a
+      >
+    </div>
+    {% endif %}
+
+    <div class="logout">
+      <a href="{% url 'logout' %}" class="nav-item logout-btn">Logout</a>
+    </div>
+    {% else %}
+    <div class="auth-buttons">
+      <a href="{% url 'login' %}" class="nav-item login-btn">Login</a>
+      <a href="{% url 'signup' %}" class="nav-item signup-btn">Sign Up</a>
+    </div>
+    {% endif %}
+  </div>
+</div>

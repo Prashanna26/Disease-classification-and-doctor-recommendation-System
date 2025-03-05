@@ -1,0 +1,40 @@
+body {
+    background-color: #f8f9fa; /* Light gray background */
+    font-family: 'Poppins', sans-serif;
+}
+.logout-form {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 100px auto; /* Center the form */
+    text-align: center;
+}
+.logout-form p {
+    color: #34a16f; /* Green text */
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.logout-form input[type="submit"] {
+    background-color: #34a16f; /* Green button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 10px 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.logout-form input[type="submit"]:hover {
+    background-color: #34a16f; /* Darker green on hover */
+}
+.logout-form input[name="Go back"] {
+    background-color: #6c757d; /* Gray button for 'Go back' */
+}
+.logout-form input[name="Go back"]:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}

@@ -1,0 +1,132 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/login_register.css' %}"
+/>
+
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-logo">
+      <img src="{% static 'images/logo.png' %}" alt="Dis-Ease Logo" />
+    </div>
+
+    <div class="auth-box">
+      {% if page == 'login' %}
+      <h1 class="auth-title">Login</h1>
+      <form method="post" action="" class="auth-form">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter your username"
+          class="auth-input"
+        />
+
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          class="auth-input"
+        />
+
+        {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == 'success' %}
+                  <div class="auth-success">
+                      <p>{{ message }}</p>
+                  </div>
+              {% elif message.tags == 'error' %}
+                  <div class="auth-error">
+                      <p>{{ message }}</p>
+                  </div>
+              {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if error_message %}
+          <div class="auth-error">
+            <p>{{ error_message }}</p>
+          </div>
+        {% endif %}
+
+
+        <input type="submit" value="Login" class="auth-button" />
+      </form>
+      <p class="auth-toggle">
+        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+      </p>
+      <p class="auth-toggle">
+        Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+      </p>
+      {% else %}
+      <h1 class="auth-title">Sign Up</h1>
+      <form method="post" action="" class="auth-form">
+        {% csrf_token %}
+
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" class="auth-input" required/>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name" class="auth-input" required/>
+
+        <label for="username">Username:</label>
+        <input type="text" name="username" class="auth-input" required/>
+
+        <label for="email">Email address:</label>
+        <input type="email" name="email" class="auth-input" required/>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password1" class="auth-input" required/>
+        <ul class="auth-guidelines">
+          <li>Your password must contain at least 8 characters.</li>
+          <li>Your password can’t be entirely numeric.</li>
+          <li>Your password can’t be too similar to your other personal information.</li>
+          <li>Your password can’t be a commonly used password.</li>
+          <li>The password is too similar to the username.</li>
+        </ul>
+
+        <label for="password_confirmation">Password confirmation:</label>
+        <input type="password" name="password2" class="auth-input" required/>
+
+        {% if error_messages_signup %}
+            <div class="auth-error">
+                {% for message in error_messages_signup %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == 'success' %}
+                  <div class="auth-success">
+                      <p>{{ message }}</p>
+                  </div>
+              {% elif message.tags == 'error' %}
+                  <div class="auth-error">
+                      <p>{{ message }}</p>
+                  </div>
+              {% endif %}
+          {% endfor %}
+      {% endif %}
+
+        <input type="submit" value="Sign Up" class="auth-button" />
+      </form>
+      <p class="auth-toggle">
+        Already have an account? <a href="{% url 'login' %}">Login here</a>
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block footer %}
+<!-- Footer is excluded here -->
+{% endblock footer %}

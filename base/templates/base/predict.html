@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/predict.css' %}" />
+
+<div class="predict-wrapper">
+    <!-- Welcome Header -->
+    <div class="predict-header">
+        <h1>Welcome back, {{ user.username }} 👋</h1>
+        <p class="intro-text">Let's find out the disease based on your symptoms</p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="predict-container">
+        <p class="description">
+            Please select up to five symptoms from the dropdowns below. This information will help us classify the most likely disease and recommend appropriate doctors or hospitals.
+        </p>
+
+        {% if error_message %}
+            <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+
+        <!-- Form -->
+        <form method="post" action="{% url 'prediction' %}">
+            {% csrf_token %}
+            {% for y in range %}
+            <div class="form-group">
+                <label for="symptom{{ y }}">Symptom {{ y }}:</label>
+                <select name="symptom{{ y }}" class="symptom-select" required>
+                    <option value="">Select Symptom {{ y }}</option>
+                    {% for x in list %}
+                    <option value="{{ x }}">{{ x }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+            <button type="submit" class="submit-button">Classify</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let selects = document.querySelectorAll(".symptom-select");
+    
+        function updateOptions() {
+            let selectedValues = new Set();
+            
+            selects.forEach(select => {
+                if (select.value) {
+                    selectedValues.add(select.value);
+                }
+            });
+    
+            selects.forEach(select => {
+                let options = select.querySelectorAll("option");
+                options.forEach(option => {
+                    if (option.value && selectedValues.has(option.value) && option.value !== select.value) {
+                        option.hidden = true;
+                    } else {
+                        option.hidden = false;
+                    }
+                });
+            });
+        }
+    
+        selects.forEach(select => {
+            select.addEventListener("change", updateOptions);
+        });
+    
+        updateOptions();
+    });
+    </script>
+    
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+
+
+<div class="profile-container" style="height: 100vh;">
+  <!-- Profile Card -->
+  <div class="user-card">
+    <div class="user-avatar">
+      <span>{{ user.first_name|default:"U"|slice:":1" }}{{ user.last_name|default:"S"|slice:":1" }}</span>
+    </div>
+    <div class="user-info">
+      <h2>{{ user.username }}</h2>
+      <p><strong>First Name:</strong> {{ patient.user.first_name }}</p>
+      <p><strong>Last Name:</strong> {{ patient.user.last_name }}</p>
+      <p><strong>Email:</strong> {{ patient.user.email }}</p>
+      <p><strong>Date of Birth:</strong> {{ patient.dob|date:"d M Y" }}</p>
+      <p><strong>Gender:</strong> {{ patient.gender }}</p>
+      <p><strong>Address:</strong> {{ patient.address }}</p>
+      <p><strong>Phone:</strong> {{ patient.phone_number }}</p>
+    </div>
+  </div>
+
+  <!-- Appointments Card -->
+  <div class="appointments-card">
+    <h3 class="appointments-title">Appointments</h3>
+    <table class="appointments-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Hospital</th>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if appointments %}
+          {% for appointment in appointments %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ appointment.hospital.name }}</td>
+              <td>{{ appointment.doctor.name }}</td>
+              <td>{{ appointment.date }}</td>
+              <td>{{ appointment.time }}</td>
+              <td class="{% if appointment.is_approved %}status-approved{% else %}status-pending{% endif %}">
+                {% if appointment.is_approved %} Approved {% else %} Pending {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="6">No appointments found.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
